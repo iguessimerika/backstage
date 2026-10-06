@@ -1,28 +1,26 @@
-"""MySQL connection helpers."""
+"""MySQL connection and DB functions."""
 
 import os
-from pathlib import Path
 
 import mysql.connector
 from mysql.connector import MySQLConnection
 
-BASE_DIR = Path(__file__).resolve().parent
-MYSQL_HOST = ""
-MYSQL_PORT = ""
-MYSQL_USER = ""
-MYSQL_PASSWORD = ""
-MYSQL_DATABASE = ""
+MYSQL_HOST = os.getenv("MYSQLHOST")
+MYSQL_PORT = int(os.getenv("MYSQLPORT", "3306"))
+MYSQL_USER = os.environ["MYSQLUSER"]
+MYSQL_PASSWORD = os.environ["MYSQLPASSWORD"]
+MYSQL_DATABASE = os.environ["MYSQLDATABASE"]
 
 
 def get_connection() -> MySQLConnection:
-    """Connect using MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE."""
+    """Connect using MYSQLHOST, MYSQLPORT, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE."""
     if not MYSQL_HOST:
             raise ValueError("MYSQL_HOST is not set.")
     
     return mysql.connector.connect(
-        host=os.getenv("MYSQL_HOST", "localhost"),
-        port=int(os.getenv("MYSQL_PORT", "3306")),
-        user=os.environ["MYSQL_USER"],
-        password=os.environ["MYSQL_PASSWORD"],
-        database=os.environ["MYSQL_DATABASE"],
+        host=MYSQL_HOST,
+        port=MYSQL_PORT,
+        user=MYSQL_USER,
+        password=MYSQL_PASSWORD,
+        database=MYSQL_DATABASE,
     )
