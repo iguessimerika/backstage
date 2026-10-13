@@ -1,26 +1,41 @@
-"""MySQL connection and DB functions."""
-
 import os
-
 import mysql.connector
-from mysql.connector import MySQLConnection
-
-MYSQL_HOST = os.getenv("MYSQLHOST")
-MYSQL_PORT = int(os.getenv("MYSQLPORT", "3306"))
-MYSQL_USER = os.environ["MYSQLUSER"]
-MYSQL_PASSWORD = os.environ["MYSQLPASSWORD"]
-MYSQL_DATABASE = os.environ["MYSQLDATABASE"]
 
 
-def get_connection() -> MySQLConnection:
-    """Connect using MYSQLHOST, MYSQLPORT, MYSQLUSER, MYSQLPASSWORD, MYSQLDATABASE."""
-    if not MYSQL_HOST:
-            raise ValueError("MYSQL_HOST is not set.")
-    
+def get_connection():
     return mysql.connector.connect(
-        host=MYSQL_HOST,
-        port=MYSQL_PORT,
-        user=MYSQL_USER,
-        password=MYSQL_PASSWORD,
-        database=MYSQL_DATABASE
+        host=os.environ["DB_HOST"],
+        port=int(os.environ["DB_PORT"]),
+        user=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
+        database=os.environ["DB_NAME"],
+        connection_timeout=10
     )
+
+
+def test_connection():
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT 1")
+        cursor.fetchone()
+
+        print(" Datenbank erfolgreich erreicht!")
+        return True
+
+    except (mysql.connector.Error, ValueError) as error:
+        print(f" Datenbankverbindung fehlgeschlagen: {error}")
+        return False
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if connection is not None:
+            connection.close()
+
+
+if __name__ == "__main__":
+    test_connection()
