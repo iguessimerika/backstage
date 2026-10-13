@@ -4,11 +4,11 @@ import mysql.connector
 
 def get_connection():
     return mysql.connector.connect(
-        host=os.environ["DB_HOST"],
-        port=int(os.environ["DB_PORT"]),
-        user=os.environ["DB_USER"],
-        password=os.environ["DB_PASSWORD"],
-        database=os.environ["DB_NAME"],
+        host=os.environ["MYSQLHOST"],
+        port=int(os.environ["MYSQLPORT"]),
+        user=os.environ["MYSQLUSER"],
+        password=os.environ["MYSQLPASSWORD"],
+        database=os.environ["MYSQLDATABASE"],
         connection_timeout=10
     )
 
@@ -23,11 +23,15 @@ def test_connection():
         cursor.execute("SELECT 1")
         cursor.fetchone()
 
-        print(" Datenbank erfolgreich erreicht!")
+        print("Datenbank erfolgreich erreicht!")
         return True
 
+    except KeyError as error:
+        print(f"Umgebungsvariable fehlt: {error.args[0]}")
+        return False
+
     except (mysql.connector.Error, ValueError) as error:
-        print(f" Datenbankverbindung fehlgeschlagen: {error}")
+        print(f"Datenbankverbindung fehlgeschlagen: {error}")
         return False
 
     finally:
