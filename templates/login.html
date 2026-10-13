@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backstage – Anmeldung</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/">
+        <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+          <rect x="11" y="2" width="10" height="23" rx="5" />
+          <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5" />
+        </svg>
+        <span>Backstage</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="view-login">
+      <div class="auth-layout">
+        <div>
+          <div class="eyebrow">Willkommen zurück</div>
+          <h1>Melde dich an</h1>
+          <p class="lead">Verwalte dein Profil, ergänze Inhalte und entdecke neue Kontakte.</p>
+        </div>
+
+        <div class="card auth-card">
+          <h2>Anmeldung</h2>
+          <form method="post">
+            <div class="field">
+              <label for="login-user">E-Mail oder Benutzername *</label>
+              <input class="input" id="login-user" name="login-user" type="text" placeholder="" value="" required>
+            </div>
+            <div class="field">
+              <label for="login-pass">Passwort *</label>
+              <input class="input" id="login-pass" name="login-pass" type="password" placeholder="" value="" required>
+            </div>
+            <div class="form-options">
+              <label class="checkbox">
+                <input type="checkbox" name="remember"> Angemeldet bleiben
+              </label>
+              <button class="btn-link" type="button">Passwort vergessen?</button>
+            </div>
+            <button class="btn" type="submit">Anmelden</button>
+            <p class="form-footer">Noch kein Konto? <a href="/register">Registrieren</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>

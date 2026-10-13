@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backstage – Profilauswahl</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#">
+        <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+          <rect x="11" y="2" width="10" height="23" rx="5" />
+          <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5" />
+        </svg>
+        <span>Backstage</span>
+      </a>
+      <nav class="site-nav" aria-label="Benutzermenü">
+        <span class="user-menu">
+          <span class="avatar" aria-hidden="true"></span> {{ username }}
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <div class="progress-bar" id="progress">
+    <div class="progress-inner">
+      <span id="progress-label">Schritt 2 von 2 · Profiltyp</span>
+      <span class="muted">Einrichtung jederzeit fortsetzbar</span>
+    </div>
+  </div>
+
+  <main class="container">
+    <section id="view-choice">
+      <div class="eyebrow">Fast geschafft</div>
+      <h1>Welches Profil möchtest du erstellen?</h1>
+      <p class="lead">Wähle den Profiltyp, der zu dir passt. Die Auswahl lässt sich später ergänzen.</p>
+
+      <div class="profile-grid">
+        <article class="card profile-card">
+          <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+            <rect x="11" y="2" width="10" height="23" rx="5" />
+            <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5" />
+          </svg>
+          <h2>Künstlerprofil erstellen</h2>
+          <p>Präsentiere deine Musik, Videos und Hörproben für Veranstalter und Fans.</p>
+          <ul class="check-list">
+            <li>Künstlerinfo und Genres</li>
+            <li>Video- und Audio-Links</li>
+            <li>Öffentliches Profil</li>
+          </ul>
+          <a class="btn" href="#artist">Künstlerprofil erstellen</a>
+        </article>
+
+        <article class="card profile-card">
+          <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+            <rect x="2" y="5" width="28" height="28" rx="3" />
+            <path d="M2 14h28M10 2v8M22 2v8" />
+          </svg>
+          <h2>Veranstalterprofil erstellen</h2>
+          <p>Stelle deine Organisation vor und werde für Künstler auffindbar.</p>
+          <ul class="check-list">
+            <li>Firmen- und Kontaktdaten</li>
+            <li>Website und Social Links</li>
+            <li>Öffentliches Profil</li>
+          </ul>
+          <a class="btn" href="#organizer">Veranstalterprofil erstellen</a>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
