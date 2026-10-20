@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veranstalter Profil erstellen</title>
+
+    <!-- Einbindung der CSS-Datei -->
+    <link rel="stylesheet" href="static\style.css">
+</head>
+<body>
+
+    <form action="#" method="POST" enctype="multipart/form-data">
+        
+        <!-- Profilbild -->
+        <fieldset>
+            <legend>Profilbild</legend>
+            <label for="profilePicture">Profilbild hinzufügen (JPG oder PNG · quadratisches Format empfohlen)</label>
+            <input type="file" id="profilePicture" name="profilePicture" accept="image/png, image/jpeg">
+        </fieldset>
+
+        <!-- Organisation -->
+        <fieldset>
+            <legend>Organisation</legend>
+            <label for="companyName">Veranstalter - Name / Firmenname *</label>
+            <input type="text" id="companyName" name="companyName" placeholder="z. B. RDF Nürnberg" required>
+        </fieldset>
+
+        <!-- Ansprechperson -->
+        <fieldset>
+            <legend>Ansprechperson</legend>
+            <label for="firstName">Vorname *</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Vorname" required>
+            
+            <label for="lastName">Nachname *</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Nachname" required>
+        </fieldset>
+
+        <!-- Online-Präsenz -->
+        <fieldset>
+            <legend>Online-Präsenz</legend>
+            <label for="website">Website</label>
+            <input type="url" id="website" name="website" placeholder="https://www.beispiel.de">
+            
+            <label for="instagram">Instagram</label>
+            <input type="text" id="instagram" name="instagram" placeholder="instagram.com/...">
+            
+            <label for="otherPlatform">Weitere Plattform</label>
+            <input type="url" id="otherPlatform" name="otherPlatform" placeholder="Link hinzufügen">
+            
+            <button type="button" id="addPlatformBtn">+ Weitere Plattform hinzufügen</button>
+        </fieldset>
+
+        <!-- Formular-Aktionen -->
+        <menu>
+            <button type="submit">Profil erstellen</button>
+        </menu>
+
+    </form>
+
+    <script>
+        document.getElementById('addPlatformBtn').addEventListener('click', function() {
+            console.log("Hier würde JavaScript per DOM-Manipulation ein weiteres URL-Input-Feld einfügen.");
+        });
+    </script>
+</body>
+</html>
