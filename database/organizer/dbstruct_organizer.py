@@ -11,6 +11,7 @@ def create_organizers_table():
                 NAME VARCHAR(50) NOT NULL,
                 FIRSTNAME VARCHAR(50) NOT NULL,
                 LASTNAME VARCHAR(50) NOT NULL,
+                PROFILPICTURE MEDIUMBLOB,
                 PRIMARY KEY (ORGANIZERID)
             )
         """)

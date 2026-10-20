@@ -6,57 +6,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veranstalter Profil erstellen</title>
     <!-- Einbindung der CSS-Datei -->
-    <link rel="stylesheet" href="static\style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
-    <form action="/submit_organizer" method="POST" enctype="multipart/form-data">
-
-        <!-- Profilbild -->
-        <fieldset>
-            <legend>Profilbild</legend>
-            <label for="profilePicture">Profilbild hinzufügen (JPEG oder PNG)</label>
-            <input type="file" id="profilePicture" name="profilePicture" accept="image/png, image/jpeg">
-        </fieldset>
-
-        <!-- Organisations Name -->
-        <fieldset>
-            <legend>Organisation</legend>
-            <label for="companyName">Organisationsname / Firmenname *</label>
-            <input type="text" id="companyName" name="companyName" placeholder="z. B. RDF Nürnberg" required>
-        </fieldset>
-
-        <!-- Ansprechperson -->
-        <fieldset>
-            <legend>Ansprechpartner</legend>
-            <label for="firstName">Vorname *</label>
-            <input type="text" id="firstName" name="firstName" placeholder="Vorname" required>
+    <main class="container">
+        <div class="card profile-form">
             
-            <label for="lastName">Nachname *</label>
-            <input type="text" id="lastName" name="lastName" placeholder="Nachname" required>
-        </fieldset>
+            <h1>Veranstalter Profil erstellen</h1>
+            <p class="lead">Bitte fülle die Details zu deiner Organisation aus.</p>
 
-        <!-- Online-Präsenz -->
-        <fieldset>
-            <legend>Online-Präsenz</legend>
-            <label for="website">Website</label>
-            <input type="url" id="website" name="website" placeholder="https://www.beispiel.de">
-            
-            <label for="instagram">Instagram</label>
-            <input type="text" id="instagram" name="instagram" placeholder="instagram.com/...">
-            
-            <label for="otherPlatform">Weitere Plattform</label>
-            <input type="url" id="otherPlatform" name="otherPlatform" placeholder="Link hinzufügen">
-            
-            <button type="button" id="addPlatformBtn">+ Weitere Plattform hinzufügen</button>
-        </fieldset>
+            <form action="/submit_organizer" method="POST" enctype="multipart/form-data" style="margin-top: 32px;">
 
-        <!-- Formular-Aktionen -->
-        <menu>
-            <button type="submit">Profil erstellen</button>
-        </menu>
+                <!-- Profilbild -->
+                <fieldset class="form-section">
+                    <legend>Profilbild</legend>
+                    <div class="field">
+                        <label for="profilePicture">Profilbild hinzufügen (JPEG oder PNG)</label>
+                        <input type="file" id="profilePicture" name="profilePicture" accept="image/png, image/jpeg" class="file-input">
+                    </div>
+                </fieldset>
 
-    </form>
+                <!-- Organisations Name -->
+                <fieldset class="form-section">
+                    <legend>Organisation</legend>
+                    <div class="field">
+                        <label for="companyName">Organisationsname / Firmenname *</label>
+                        <input type="text" id="companyName" name="companyName" placeholder="z. B. RDF Nürnberg" class="input" required>
+                    </div>
+                </fieldset>
+
+                <!-- Ansprechperson -->
+                <fieldset class="form-section">
+                    <legend>Ansprechpartner</legend>
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="firstName">Vorname *</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="Vorname" class="input" required>
+                        </div>
+                        
+                        <div class="field">
+                            <label for="lastName">Nachname *</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Nachname" class="input" required>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Online-Präsenz -->
+                <fieldset class="form-section">
+                    <legend class="section-heading">Online-Präsenz</legend>
+                    <div class="field">
+                        <label for="website">Website</label>
+                        <input type="url" id="website" name="website" placeholder="https://www.beispiel.de" class="input">
+                    </div>
+                    
+                    <div class="field">
+                        <label for="instagram">Instagram</label>
+                        <input type="text" id="instagram" name="instagram" placeholder="instagram.com/..." class="input">
+                    </div>
+                    
+                    <div id="additionalPlatforms">
+                        <div class="field">
+                            <label for="otherPlatform">Weitere Plattform</label>
+                            <input type="url" id="otherPlatform" name="otherPlatform" placeholder="Link hinzufügen" class="input">
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="addPlatformBtn" class="btn-link" style="margin-top: 8px;">+ Weitere Plattform hinzufügen</button>
+                </fieldset>
+
+                <!-- Formular-Aktionen -->
+                <menu class="form-actions" style="padding: 0;">
+                    <button type="submit" class="btn">Profil erstellen</button>
+                </menu>
+
+            </form>
+        </div>
+    </main>
 
     <script>
         document.getElementById('addPlatformBtn').addEventListener('click', function() {

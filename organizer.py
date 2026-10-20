@@ -16,6 +16,12 @@ def submit_organizer():
     company_name = request.form.get('companyName')
     first_name = request.form.get('firstName')
     last_name = request.form.get('lastName')
+
+    # Profilbild auslesen 
+    profile_picture_file = request.files.get('profilPicture')
+    profile_picture_data = None
+    if profile_picture_file and profile_picture_file.filename != '':
+        profile_picture_data = profile_picture_file.read() #Liest die Binärdaten
     
     # Serverseitige Validierung
     if not company_name or not first_name or not last_name:
@@ -31,10 +37,10 @@ def submit_organizer():
 
         # Schutz gegen SQL Angriffe 
         sql_insert_query = """
-            INSERT INTO ORGANIZER (USER_ID, NAME, FIRSTNAME, LASTNAME) 
+            INSERT INTO ORGANIZER (USER_ID, NAME, FIRSTNAME, LASTNAME, PROFILPICTURE) 
             VALUES (%s, %s, %s, %s)
         """
-        insert_tuple = (user_id, company_name, first_name, last_name)
+        insert_tuple = (user_id, company_name, first_name, last_name, profile_picture_data)
         
         cursor.execute(sql_insert_query, insert_tuple)
         connection.commit() 
