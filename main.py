@@ -15,13 +15,14 @@ def index():
 
 @app.route("/login", methods=['POST'])
 def login():
-    username = request.form['login-user']
+    pass_check = user.login_user()
 
-    user.set_session_userid(username)
+    if pass_check:
+        redirect = user.get_login_redirect(session.userid)
+        return render_template(url_for(redirect))
 
-    redirect = user.get_login_redirect(session.userid)
 
-    return render_template(url_for(redirect))
+    return render_template("login.html", error=pass_check)
 
 @app.route("/register")
 def add_user():
