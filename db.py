@@ -1,4 +1,4 @@
-import os
+import os, user, artist
 import mysql.connector
 
 
@@ -40,6 +40,9 @@ def test_connection():
         if connection is not None:
             connection.close()
 
-
+def init_database():
+    user.init_user_db()
+    artist.init_artist_db()
+    
 if __name__ == "__main__":
     test_connection()

@@ -1,4 +1,4 @@
-import os, user, artist
+import os, user, db, artist
 from flask import Flask, redirect, render_template, request, url_for, session
 
 app = Flask(__name__)
@@ -14,6 +14,7 @@ def test():
 @app.route("/login", methods=['GET', 'POST'])
 def index():
     if request.method == "GET":
+        db.init_database()
         return render_template("login.html")
     
     l_user = request.form['login-user']
@@ -63,7 +64,8 @@ def profile_choice():
 def create_artist():
     if request.method == "POST":
         artist.create_artist(request.form.to_dict(), 
-                             request.files.get("artist-image"))
+                             session.get("userid"),
+                             request.files.get("artist-image") )
         return redirect(url_for("create_artist"))
 
     return render_template("create_artist.html")

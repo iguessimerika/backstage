@@ -1,4 +1,4 @@
-from db import get_connection
+import db
 
 
 def create_artist_table():

@@ -1,77 +1,16 @@
-from os import abort
-from io import BytesIO
-from flask import abort, send_file
-from flask import send_file
+import os, user
+from database.artist import dbdata_artist, dbstruct_artist
 
-import db
+def create_artist(data, user_id, picture=None):
+    # Call the function from dbdata_artist to create the artist in the database
+    artist_id = dbdata_artist.create_artist(data, user_id, picture)
+    return artist_id
 
+def get_artist_picture(artist_id):
+    # Call the function from dbdata_artist to retrieve the artist's picture
+    picture_data = dbdata_artist.get_picture(artist_id)
+    return picture_data
 
-def create_artist(data, picture=None):
-    connection = db.get_connection()
-    cursor = None
+def init_artist_db():
+    dbstruct_artist.create_artist_table()
 
-    try:
-
-        picture_data = picture.read() or None            
-        cursor = connection.cursor()
-        cursor.execute(
-                    """
-                    INSERT INTO ARTIST (
-                        ARTISTNAME, FIRSTNAME, LASTNAME,
-                        LOCATION, BIO, USER_ID, PICTURE
-                    )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s)
-                    """,
-                    (
-                        data["artistname"],
-                        data["firstname"],
-                        data["lastname"],
-                        data["location"],
-                        data.get("bio", ""),
-                        1,
-                        picture_data,
-                    ),
-                )
-
-        connection.commit()
-        return cursor.lastrowid
-
-    finally:
-        if cursor is not None:
-            cursor.close()
-        connection.close()
-
-def get_picture(artist_id):
-    connection = db.get_connection()
-    cursor = None
-
-    try:
-        cursor = connection.cursor()
-        cursor.execute(
-            "SELECT PICTURE FROM ARTIST WHERE ARTISTID = %s",
-            (artist_id,),
-        )
-        row = cursor.fetchone()
-        return row[0] if row else None
-
-    finally:
-        if cursor is not None:
-            cursor.close()
-        connection.close()
-
-def artist_picture(artist_id):
-    picture = get_picture(artist_id)
-
-    if not picture:
-        abort(404)
-
-    mimetype = (
-        "image/png"
-        if picture.startswith(b"\x89PNG\r\n\x1a\n")
-        else "image/jpeg"
-    )
-
-    return send_file(
-        BytesIO(picture),
-        mimetype=mimetype,
-    )
