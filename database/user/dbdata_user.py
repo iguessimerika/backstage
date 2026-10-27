@@ -21,7 +21,7 @@ def create_user(username, email, password_hash):
         connection.close()
 
 """ Retrieves the user ID based on the provided username or email. """
-def get_user_id(username_or_email):
+def get_userid(username_or_email):
     connection = db.get_connection()
     try:
         cursor = connection.cursor()
@@ -59,7 +59,7 @@ def get_user_by_id(userid):
         connection.close()
 
 """ Retrieves the profile type of a user based on their user ID. """
-def get_profile_type(user_id):
+def get_profile_type(userid):
     connection = db.get_connection()
     try:
         cursor = connection.cursor()
@@ -76,7 +76,47 @@ def get_profile_type(user_id):
             LEFT JOIN ORGANIZER ON ORGANIZER.USER_ID = USERS.USERID
             WHERE USERS.USERID = %s
             """,
-            (user_id,),
+            (userid,),
+        )
+        row = cursor.fetchone()
+        cursor.close()
+        return row[0] if row else None
+    finally:
+        connection.close()
+
+""" Retrieves the password hash for a user based on their user ID. """
+def get_password_hash(userid):
+    connection = db.get_connection()
+    try:
+        cursor = connection.cursor()
+        cursor.execute(
+            """
+            SELECT
+                USERS.PASSWORD_HASH
+            FROM USERS
+            WHERE USERS.USERID = %s
+            """,
+            (userid,),
+        )
+        row = cursor.fetchone()
+        cursor.close()
+        return row[0] if row else None
+    finally:
+        connection.close()
+
+""" Retrieves the username for a user based on their user ID. """
+def get_name_by_userid(userid):
+    connection = db.get_connection()
+    try:
+        cursor = connection.cursor()
+        cursor.execute(
+            """
+            SELECT
+                USERS.USERNAME
+            FROM USERS
+            WHERE USERS.USERID = %s
+            """,
+            (userid,),
         )
         row = cursor.fetchone()
         cursor.close()

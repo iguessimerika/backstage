@@ -32,21 +32,30 @@
 
         <div class="card auth-card">
           <h2>Anmeldung</h2>
-          <form method="post">
+          <form method="POST" action="/login">
             <div class="field">
               <label for="login-user">E-Mail oder Benutzername *</label>
-              <input class="input" id="login-user" name="login-user" type="text" placeholder="" value="" required>
+              <input class="input" id="login-user" name="login-user" type="text" placeholder="" value="{{ request.form.get('login-user', '') }}" required
+                {% if error is defined and error == "no-user" %}aria-invalid="true" aria-describedby="login-user-hint"{% endif %}>
+              {% if error is defined and error == "no-user" %}
+                <small class="error-text" id="login-user-hint">Dieser Benutzername oder diese E-Mail-Adresse ist nicht registriert.</small>
+              {% endif %}
             </div>
             <div class="field">
               <label for="login-pass">Passwort *</label>
-              <input class="input" id="login-pass" name="login-pass" type="password" placeholder="" value="" required>
+              <input class="input" id="login-pass" name="login-pass" type="password" placeholder="" value="{{ request.form.get('login-pass', '') }}" required
+                {% if error is defined and error == "wrong-password" %}aria-invalid="true" aria-describedby="login-pass-hint"{% endif %}>
+              {% if error is defined and error == "wrong-password" %}
+                <small class="error-text" id="login-pass-hint">Das Passwort ist nicht korrekt.</small>
+              {% endif %}
             </div>
-            <div class="form-options">
+            <!-- vorerst auskommentiert - wird später implementiert -->
+            <!-- <div class="form-options">
               <label class="checkbox">
                 <input type="checkbox" name="remember"> Angemeldet bleiben
               </label>
               <button class="btn-link" type="button">Passwort vergessen?</button>
-            </div>
+            </div> -->
             <button class="btn" type="submit">Anmelden</button>
             <p class="form-footer">Noch kein Konto? <a href="/register">Registrieren</a></p>
           </form>
