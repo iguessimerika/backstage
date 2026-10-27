@@ -6,7 +6,7 @@ def create_artist_table():
     cursor = None
 
     try:
-        connection = get_connection()
+        connection = db.get_connection()
         cursor = connection.cursor()
 
         cursor.execute("""
