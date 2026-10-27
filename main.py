@@ -73,7 +73,7 @@ def create_artist():
 
 @app.route("/artist/<int:artist_id>/picture")
 def artist_picture(artist_id):
-    return artist.artist_picture(artist_id)
+    return artist.get_artist_picture(artist_id)
 
 
 if __name__ == "__main__":
