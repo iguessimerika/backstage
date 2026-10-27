@@ -12,28 +12,26 @@ def create_artist(data, picture=None):
 
     try:
 
-        if picture is not None and picture.filename:
-            picture_data = picture.read()
-
+        picture_data = picture.read() or None            
         cursor = connection.cursor()
         cursor.execute(
-            """
-            INSERT INTO ARTIST (
-                ARTISTNAME, FIRSTNAME, LASTNAME,
-                LOCATION, BIO, USER_ID, PICTURE
-            )
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """,
-            (
-                data["artistname"],
-                data["firstname"],
-                data["lastname"],
-                data["location"],
-                data.get("bio", ""),
-                1,
-                picture_data,
-            ),
-        )
+                    """
+                    INSERT INTO ARTIST (
+                        ARTISTNAME, FIRSTNAME, LASTNAME,
+                        LOCATION, BIO, USER_ID, PICTURE
+                    )
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """,
+                    (
+                        data["artistname"],
+                        data["firstname"],
+                        data["lastname"],
+                        data["location"],
+                        data.get("bio", ""),
+                        1,
+                        picture_data,
+                    ),
+                )
 
         connection.commit()
         return cursor.lastrowid
