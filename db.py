@@ -1,5 +1,4 @@
-import os, user, artist
-import mysql.connector
+import os, user, artist, mysql.connector
 
 
 def get_connection():
@@ -43,6 +42,6 @@ def test_connection():
 def init_database():
     user.init_user_db()
     artist.init_artist_db()
-    
+
 if __name__ == "__main__":
     test_connection()

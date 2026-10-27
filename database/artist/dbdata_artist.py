@@ -1,7 +1,6 @@
 from os import abort
 from io import BytesIO
 from flask import abort, send_file
-from flask import send_file
 
 import db
 
