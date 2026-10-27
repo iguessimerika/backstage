@@ -71,9 +71,13 @@ def create_artist():
     return render_template("create_artist.html")
 
 
-@app.route("/artist/<int:artist_id>/picture")
+@app.route("/artistpicture/<int:artist_id>")
 def artist_picture(artist_id):
     return artist.get_artist_picture(artist_id)
+
+@app.route("/artist_dashboard")
+def artist_dashboard():
+    return render_template("profile-choice.html", name=session.get("username"))
 
 
 if __name__ == "__main__":
