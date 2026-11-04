@@ -27,7 +27,7 @@ def create_artist_table():
         """)
 
         connection.commit()
-        print("Tabelle ARTIST ist vorhanden.")
+        print("Tabelle ARTIST ist vorhanden oder existiert bereits.")
         return True
 
     except Exception as error:

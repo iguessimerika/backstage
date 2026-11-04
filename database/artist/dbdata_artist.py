@@ -57,6 +57,39 @@ def get_picture(artist_id):
             cursor.close()
         connection.close()
 
+
+def get_artist_by_id(artist_id):
+    connection = db.get_connection()
+    cursor = None
+
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute(
+            """
+            SELECT
+                ARTISTID,
+                USER_ID,
+                ARTISTNAME,
+                FIRSTNAME,
+                LASTNAME,
+                LOCATION,
+                BIO,
+                GENRE_ID,
+                SUBGENRE_ID,
+                PICTURE
+            FROM ARTIST
+            WHERE ARTISTID = %s
+            """,
+            (artist_id,),
+        )
+        return cursor.fetchone()
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        connection.close()
+
+
 def artist_picture(artist_id):
     picture = get_picture(artist_id)
 

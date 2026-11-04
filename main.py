@@ -75,6 +75,17 @@ def create_artist():
 def artist_picture(artist_id):
     return artist.get_artist_picture(artist_id)
 
+
+@app.route("/show_artist/<int:artist_id>")
+def show_artist(artist_id):
+    artist_data = artist.get_artist_by_id(artist_id)
+
+    if artist_data is None:
+        return "Artist not found", 404
+
+    return render_template("show_artist.html", artist=artist_data)
+
+
 @app.route("/artist_dashboard")
 def artist_dashboard():
     return render_template("profile-choice.html", name=session.get("username"))
