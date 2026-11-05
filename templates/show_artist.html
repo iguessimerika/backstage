@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ artist.ARTISTNAME }} – Backstage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="/">
+                <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+                    <rect x="11" y="2" width="10" height="23" rx="5"/>
+                    <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5"/>
+                </svg>
+                <span>Backstage</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card artist-detail" aria-labelledby="artist-name">
+            <div class="artist-header">
+                <div class="artist-image-box">
+                    {% if artist.PICTURE %}
+                        <img
+                            src="{{ url_for('artist_picture', artist_id=artist.ARTISTID) }}"
+                            alt="Profilbild von {{ artist.ARTISTNAME }}"
+                        >
+                    {% else %}
+                        <div class="artist-image-placeholder">Kein Profilbild</div>
+                    {% endif %}
+                </div>
+
+                <div class="artist-summary">
+                    <div class="eyebrow">Künstlerprofil</div>
+                    <h1 id="artist-name">{{ artist.ARTISTNAME }}</h1>
+                    <p class="lead">
+                        {{ artist.FIRSTNAME }} {{ artist.LASTNAME }}
+                        {% if artist.LOCATION %}
+                            · {{ artist.LOCATION }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <div class="artist-grid">
+                <div class="info-block">
+                    <h2>Profil</h2>
+                    <p><strong>Künstlername:</strong> {{ artist.ARTISTNAME }}</p>
+                    <p><strong>Vorname:</strong> {{ artist.FIRSTNAME }}</p>
+                    <p><strong>Nachname:</strong> {{ artist.LASTNAME }}</p>
+                    <p><strong>Standort:</strong> {{ artist.LOCATION or 'Nicht angegeben' }}</p>
+                </div>
+
+                <div class="info-block">
+                    <h2>Bio</h2>
+                    <p>{{ artist.BIO or 'Keine Bio vorhanden.' }}</p>
+                </div>
+            </div>
+        </section>
+
+        {% if artist.links %}
+            <section class="card artist-links-card" aria-labelledby="artist-links-title">
+                <h2 id="artist-links-title">Links &amp; Hörproben</h2>
+
+                <ul class="artist-links-grid">
+                    {% for link in artist.links %}
+                        <li>
+                            <a
+                                class="artist-link-item"
+                                href="{{ link.url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="{{ link.url }}"
+                            >
+                                <span class="artist-link-text">
+                                    <strong>{{ link.label }}</strong>
+                                    <span class="artist-link-domain">{{ link.domain }}</span>
+                                </span>
+                                <span class="artist-link-arrow" aria-hidden="true">↗</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>
