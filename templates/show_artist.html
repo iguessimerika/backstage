@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backstage – Artist</title>
+    <title>{{ artist.ARTISTNAME }} – Backstage</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -20,19 +20,22 @@
     </header>
 
     <main class="container">
-        <section class="card artist-detail">
+        <section class="card artist-detail" aria-labelledby="artist-name">
             <div class="artist-header">
                 <div class="artist-image-box">
                     {% if artist.PICTURE %}
-                        <img src="{{ url_for('artist_picture', artist_id=artist.ARTISTID) }}" alt="{{ artist.ARTISTNAME }}">
+                        <img
+                            src="{{ url_for('artist_picture', artist_id=artist.ARTISTID) }}"
+                            alt="Profilbild von {{ artist.ARTISTNAME }}"
+                        >
                     {% else %}
-                        <div class="artist-image-placeholder">No image</div>
+                        <div class="artist-image-placeholder">Kein Profilbild</div>
                     {% endif %}
                 </div>
 
                 <div class="artist-summary">
-                    <div class="eyebrow">Artist</div>
-                    <h1>{{ artist.ARTISTNAME }}</h1>
+                    <div class="eyebrow">Künstlerprofil</div>
+                    <h1 id="artist-name">{{ artist.ARTISTNAME }}</h1>
                     <p class="lead">
                         {{ artist.FIRSTNAME }} {{ artist.LASTNAME }}
                         {% if artist.LOCATION %}
@@ -57,6 +60,32 @@
                 </div>
             </div>
         </section>
+
+        {% if artist.links %}
+            <section class="card artist-links-card" aria-labelledby="artist-links-title">
+                <h2 id="artist-links-title">Links &amp; Hörproben</h2>
+
+                <ul class="artist-links-grid">
+                    {% for link in artist.links %}
+                        <li>
+                            <a
+                                class="artist-link-item"
+                                href="{{ link.url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="{{ link.url }}"
+                            >
+                                <span class="artist-link-text">
+                                    <strong>{{ link.label }}</strong>
+                                    <span class="artist-link-domain">{{ link.domain }}</span>
+                                </span>
+                                <span class="artist-link-arrow" aria-hidden="true">↗</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
     </main>
 </body>
 </html>
