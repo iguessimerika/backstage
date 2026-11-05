@@ -2,7 +2,7 @@ from io import BytesIO
 from flask import abort, send_file
 from database.links import dbdata_links
 import db
-import links
+
 
 
 def create_artist(data, user_id, picture=None,):
