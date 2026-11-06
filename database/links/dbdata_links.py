@@ -90,5 +90,4 @@ def get_links_byRelationType(relation_id, cursor, relation_type):
             "url": url,
             "domain": hostname.removeprefix("www."),
         })
-    print("GEFUNDENE LINKS:", result)
     return result
