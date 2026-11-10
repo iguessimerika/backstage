@@ -32,7 +32,7 @@ def get_login_redirect(userid):
     profile_type = dbdata_user.get_profile_type(userid)
 
     if profile_type == "artist":
-        redirect = "artist_dashboard"
+        redirect = "artist.artist_dashboard"  # Route liegt im Blueprint "artist"
     elif profile_type == "organizer":
         redirect = "organizer_dashboard"
     
