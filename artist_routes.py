@@ -34,4 +34,23 @@ def show_artist(artist_id):
 
 @artist_bp.route("/artist_dashboard")
 def artist_dashboard():
-    return render_template("profile-choice.html", name=session.get("username"))
+    # Nur eingeloggte Nutzer
+    userid = session.get("userid")
+    if userid is None:
+        return redirect(url_for("index"))
+
+    # Nur Nutzer mit Künstlerprofil
+    artist_data = artist.get_artist_by_userid(userid)
+    if artist_data is None:
+        return redirect(url_for("profile_choice"))
+
+    completion, next_step = artist.get_profile_progress(artist_data)
+
+    return render_template(
+        "artist_dashboard.html",
+        name=session.get("username"),
+        first_name=artist_data.get("FIRSTNAME") or session.get("username"),
+        artist_id=artist_data.get("ARTISTID"),
+        completion=completion,
+        next_step=next_step,
+    )

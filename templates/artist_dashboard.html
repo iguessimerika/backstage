@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backstage – Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{{ url_for('artist.artist_dashboard') }}">
+        <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+          <rect x="11" y="2" width="10" height="23" rx="5" />
+          <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5" />
+        </svg>
+        <span>Backstage</span>
+      </a>
+      <nav class="site-nav" aria-label="Hauptmenü">
+        <a href="{{ url_for('artist.artist_dashboard') }}" aria-current="page">Dashboard</a>
+        <a href="#">Entdecken</a>
+        <a href="{{ url_for('artist.show_artist', artist_id=artist_id) }}">Profil</a>
+        <span class="user-menu">
+          <span class="avatar" aria-hidden="true"></span> {{ name }}
+        </span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="view-dashboard">
+      <div class="eyebrow">Dashboard</div>
+      <h1>Hallo {{ first_name }}!</h1>
+      <p class="lead">Hier findest du den Status deines Künstlerprofils und deine nächsten Schritte.</p>
+
+      <article class="card profile-status">
+        <div class="section-heading">
+          <h2>
+            {% if completion < 100 %}Dein Profil ist fast vollständig{% else %}Dein Profil ist vollständig{% endif %}
+          </h2>
+          <strong>{{ completion }} %</strong>
+        </div>
+        <progress class="progress-meter" max="100" value="{{ completion }}">{{ completion }} %</progress>
+        {% if next_step %}
+        <p class="help-text">{{ next_step }}</p>
+        {% endif %}
+      </article>
+
+      <div class="dashboard-actions">
+        <a class="btn" href="#">Profil bearbeiten</a> {# @WIP: Link zur Profilbearbeitung, sobald die Funktion umgesetzt ist #}
+        <a class="btn btn-secondary" href="{{ url_for('artist.show_artist', artist_id=artist_id) }}">Profil ansehen</a>
+      </div>
+
+      <div class="profile-grid">
+        {% if activities %}
+        <article class="card">
+          <h2>Aktivitäten</h2>
+          {# @WIP: Inhalt folgt, sobald die Funktion umgesetzt ist #}
+        </article>
+        {% else %}
+        <article class="placeholder-tile">
+          <span class="placeholder-icon" aria-hidden="true"></span>
+          <h2>Aktivitäten</h2>
+          <p class="help-text">Spätere Benachrichtigungen und Updates</p>
+        </article>
+        {% endif %}
+
+        {% if contacts %}
+        <article class="card">
+          <h2>Kontakte</h2>
+          {# @WIP: Inhalt folgt, sobald die Funktion umgesetzt ist #}
+        </article>
+        {% else %}
+        <article class="placeholder-tile">
+          <span class="placeholder-icon" aria-hidden="true"></span>
+          <h2>Kontakte</h2>
+          <p class="help-text">Spätere Anfragen und Verbindungen</p>
+        </article>
+        {% endif %}
+
+        {% if recommendations %}
+        <article class="card tile-wide">
+          <h2>Empfehlungen</h2>
+          {# @WIP: Inhalt folgt, sobald die Funktion umgesetzt ist #}
+        </article>
+        {% else %}
+        <article class="placeholder-tile tile-wide">
+          <span class="placeholder-icon" aria-hidden="true"></span>
+          <h2>Empfehlungen</h2>
+          <p class="help-text">Platz für passende Künstler, Veranstalter oder Veranstaltungen</p>
+        </article>
+        {% endif %}
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
