@@ -1,5 +1,6 @@
 import db
 from urllib.parse import urlsplit
+from werkzeug.datastructures import MultiDict
 
 
 ARTIST_RELATION_TYPE = '1'
@@ -28,7 +29,6 @@ LINK_TYPES = {
 }
 
 
-from werkzeug.datastructures import MultiDict
 
 
 def map_links(data):
