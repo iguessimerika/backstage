@@ -48,7 +48,7 @@ def artist_dashboard():
     completion, next_step = artist.get_profile_progress(artist_data)
 
     return render_template(
-        "dashboard.html",
+        "artist_dashboard.html",
         name=session.get("username"),
         first_name=artist_data.get("FIRSTNAME") or session.get("username"),
         artist_id=artist_data.get("ARTISTID"),
