@@ -63,10 +63,12 @@ def profile_choice():
 @app.route("/create_artist", methods=["GET", "POST"])
 def create_artist():
     if request.method == "POST":
-        artist.create_artist(request.form.to_dict(), 
-                             session.get("userid"),
-                             request.files.get("artist-image") )
-        return redirect(url_for("create_artist"))
+        artist_id = artist.create_artist(
+            request.form.to_dict(),
+            session.get("userid"),
+            request.files.get("artist-image"),
+        )
+        return redirect(url_for("show_artist", artist_id=artist_id))
 
     return render_template("create_artist.html")
 

@@ -1,4 +1,6 @@
 import db
+from urllib.parse import urlsplit
+
 
 ARTIST_RELATION_TYPE = '1'
 
@@ -8,7 +10,7 @@ LINK_LABELS = {
     3: "Spotify-Hörprobe",
     4: "SoundCloud-Hörprobe",
     5: "YouTube-Vorschauvideo",
-    6: "Weitere Plattform",
+    90: "Weitere Plattform",
 }
 
 LINK_TYPES = {
@@ -17,7 +19,7 @@ LINK_TYPES = {
     "audio-2": 3,       # Spotify-Hörprobe
     "audio-1": 4,       # SoundCloud-Hörprobe
     "video-1": 5,       # YouTube-Vorschauvideo
-    "artist-sc": 6,     # Weitere Plattform
+    "artist-sc": 90,     # Weitere Plattform
 }
 
 
@@ -55,7 +57,7 @@ def insert_artist_links(cursor, data, artist_id, relation_type):
             rows,
         )
 
-from urllib.parse import urlsplit
+
 
 
 
