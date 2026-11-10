@@ -11,7 +11,7 @@
         <div class="header-inner">
             <a class="brand" href="/">
                 <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
-                    <rect x="11" y="2" width="10" height="23" rx="5"/>
+                    <rect x="11" y="2" width="10" height="11" rx="5"/>
                     <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5"/>
                 </svg>
                 <span>Backstage</span>
@@ -25,7 +25,7 @@
                 <div class="artist-image-box">
                     {% if artist.PICTURE %}
                         <img
-                            src="{{ url_for('artist_picture', artist_id=artist.ARTISTID) }}"
+                            src="{{ url_for('artist.artist_picture', artist_id=artist.ARTISTID) }}"
                             alt="Profilbild von {{ artist.ARTISTNAME }}"
                         >
                     {% else %}
