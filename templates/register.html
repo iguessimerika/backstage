@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backstage – Registrierung</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/">
+        <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+          <rect x="11" y="2" width="10" height="23" rx="5" />
+          <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5" />
+        </svg>
+        <span>Backstage</span>
+      </a>
+    </div>
+  </header>
+
+  <div class="progress-bar" id="progress">
+    <div class="progress-inner">
+      <span id="progress-label">Schritt 1 von 2 · Konto erstellen</span>
+      <span class="muted">Einrichtung jederzeit fortsetzbar</span>
+    </div>
+  </div>
+
+  <main class="container">
+    <section id="view-register">
+      <div class="auth-layout">
+        <div>
+          <div class="eyebrow">Willkommen</div>
+          <h1>Dein Zugang zur Bühne</h1>
+          <p class="lead">Registriere dich, um ein Künstler- oder Veranstalterprofil anzulegen.</p>
+          <ol class="steps">
+            <li>Konto erstellen</li>
+            <li>Profiltyp auswählen</li>
+            <li>Profil veröffentlichen</li>
+          </ol>
+        </div>
+
+        <div class="card auth-card">
+          <h2>Konto erstellen</h2>
+          <form method="post" action="/register">
+            <div class="field">
+              <label for="reg-user">Benutzername *</label>
+              <input class="input" id="reg-user" name="reg-user" type="text" placeholder="z. B. iguessimreeka" value="{{ request.form.get('reg-user', '') }}" required>
+            </div>
+            <div class="field">
+              <label for="reg-email">E-Mail *</label>
+              <input class="input" id="reg-email" name="reg-email" type="email" placeholder="name@beispiel.de" value="{{ request.form.get('reg-email', '') }}" required>
+            </div>
+            <div class="field">
+              <label for="reg-pass">Passwort *</label>
+              <input class="input" id="reg-pass" name="reg-pass" type="password" minlength="8" required
+                {% if errors and errors.pass %}aria-invalid="true" aria-describedby="reg-pass-hint"{% endif %}>
+              {% if errors and errors.pass %}
+                <small class="error-text" id="reg-pass-hint">{{ errors.pass }}</small>
+              {% else %}
+                <small class="help-text">Mindestens 8 Zeichen</small>
+              {% endif %}
+            </div>
+            <div class="field">
+              <label for="reg-confirm">Passwort bestätigen *</label>
+              <input class="input" id="reg-confirm" name="reg-confirm" type="password" required
+                {% if errors and errors.confirm %}aria-invalid="true" aria-describedby="reg-confirm-hint"{% endif %}>
+              {% if errors and errors.confirm %}
+                <small class="error-text" id="reg-confirm-hint">{{ errors.confirm }}</small>
+              {% endif %}
+            </div>
+            <button class="btn" type="submit">Registrieren</button>
+            <p class="form-footer">Bereits registriert? <a href="/">Anmelden</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Prüft im Browser, ob beide Passwörter übereinstimmen und mindestens 8 Zeichen lang sind.
+    // Die eigentliche Prüfung muss zusätzlich im Flask-Backend erfolgen.
+    const password = document.querySelector('#reg-pass');
+    const confirmPassword = document.querySelector('#reg-confirm');
+
+    function checkPasswords() {
+      confirmPassword.setCustomValidity(
+        confirmPassword.value !== password.value ? 'Die Passwörter stimmen nicht überein.' : ''
+      );
+    }
+    password.addEventListener('input', checkPasswords);
+    confirmPassword.addEventListener('input', checkPasswords);
+  </script>
+</body>
+
+</html>
