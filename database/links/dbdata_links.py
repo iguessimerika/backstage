@@ -10,16 +10,20 @@ LINK_LABELS = {
     3: "Spotify-Hörprobe",
     4: "SoundCloud-Hörprobe",
     5: "YouTube-Vorschauvideo",
+    6: "Facebook-Profil",
+    7: "Veranstaler-Website",
     90: "Weitere Plattform",
 }
 
 LINK_TYPES = {
-    "artist-ig": 1,     # Instagram
+    "instagram": 1,     # Instagram
     "artist-other": 2,  # YouTube-Profil
     "audio-2": 3,       # Spotify-Hörprobe
     "audio-1": 4,       # SoundCloud-Hörprobe
     "video-1": 5,       # YouTube-Vorschauvideo
-    "artist-sc": 90,     # Weitere Plattform
+    "organizer-fb": 6,  # Facebook Profil
+    "organizer-www": 7, # Website der Veranstalter
+    "other-sc": 90,    # Weitere Plattform
 }
 
 
