@@ -3,6 +3,7 @@ from urllib.parse import urlsplit
 
 
 ARTIST_RELATION_TYPE = '1'
+ORGANIZER_RELATION_TYPE = '2'
 
 LINK_LABELS = {
     1: "Instagram",
@@ -27,14 +28,14 @@ LINK_TYPES = {
 }
 
 
-def map_artist_links(data):
+def map_links(data):
     links = []
 
     for field, value in data.items():
         link_type = LINK_TYPES.get(field)
 
         if field == "additional_links" or field.startswith("additional_links_"):
-            link_type = 6
+            link_type = 90
 
         if link_type is None or not isinstance(value, str):
             continue
@@ -46,10 +47,10 @@ def map_artist_links(data):
     return links
 
 
-def insert_artist_links(cursor, data, artist_id, relation_type):
+def insert_links(cursor, data, relation_id, relation_type):
     rows = [
-        (link_type, url, relation_type, artist_id)
-        for link_type, url in map_artist_links(data)
+        (link_type, url, relation_type, relation_id)
+        for link_type, url in map_links(data)
     ]
 
     if rows:

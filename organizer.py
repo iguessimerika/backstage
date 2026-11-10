@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request
-
+from database.links import dbdata_links
 import db
 
 # Initialisierung des Blueprints für den Organizer-Bereich
@@ -20,6 +20,7 @@ def submit_organizer():
         company_name = request.form.get("companyName")
         first_name = request.form.get("firstName")
         last_name = request.form.get("lastName")
+        data = request.form.to_dict()
 
         # Profilbild auslesen
         profile_picture_file = request.files.get("profilePicture")
@@ -51,8 +52,10 @@ def submit_organizer():
                 last_name,
                 profile_picture_data,
             )
-
+            
             cursor.execute(sql_insert_query, insert_tuple)
+            organizer_id = cursor.lastrowid
+            dbdata_links.insert_links(cursor, data, organizer_id, 2)
             connection.commit()
 
             return "Veranstalter Profil erfolgreich in der Datenbank angelegt!"
