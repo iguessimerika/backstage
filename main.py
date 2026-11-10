@@ -1,6 +1,7 @@
 import os, user, db, artist
 from flask import Flask, redirect, render_template, request, url_for, session
 from artist_routes import artist_bp
+from organizer import organizer_bp
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"  # wichtig für Sessions
@@ -56,7 +57,10 @@ def profile_choice():
  
 # -- ARTIST -- 
 app.register_blueprint(artist_bp)
- 
+
+# -- ORGANIZER --
+# Registrierung des Organizer-Moduls
+app.register_blueprint(organizer_bp)
  
 if __name__ == "__main__":
     app.run(
