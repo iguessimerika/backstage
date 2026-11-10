@@ -1,5 +1,6 @@
 import os, user, db, artist
 from flask import Flask, redirect, render_template, request, url_for, session
+from artist_routes import artist_bp
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"  # wichtig für Sessions
@@ -60,24 +61,7 @@ def profile_choice():
 
 
 # -- ARTIST -- 
-@app.route("/create_artist", methods=["GET", "POST"])
-def create_artist():
-    if request.method == "POST":
-        artist.create_artist(request.form.to_dict(), 
-                             session.get("userid"),
-                             request.files.get("artist-image") )
-        return redirect(url_for("create_artist"))
-
-    return render_template("create_artist.html")
-
-
-@app.route("/artistpicture/<int:artist_id>")
-def artist_picture(artist_id):
-    return artist.get_artist_picture(artist_id)
-
-@app.route("/artist_dashboard")
-def artist_dashboard():
-    return render_template("profile-choice.html", name=session.get("username"))
+app.register_blueprint(artist_bp)
 
 
 if __name__ == "__main__":
