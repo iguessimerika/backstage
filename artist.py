@@ -1,6 +1,5 @@
 import os, user
 from database.artist import dbdata_artist, dbstruct_artist
-from database.links import dbdata_links, dbstruct_links
 
 def create_artist(data, user_id, picture=None):
     # Call the function from dbdata_artist to create the artist in the database

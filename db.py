@@ -1,4 +1,4 @@
-import os, user, artist, mysql.connector, links, db
+import os, user, artist, mysql.connector, links
 
 
 def get_connection():
