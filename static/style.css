@@ -87,7 +87,157 @@ h3, legend { font-size: 21px; font-weight: 700; }
 .notice { margin-bottom: 24px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 4px; background: white; }
 .notice-success { border-color: var(--success); color: var(--success); }
 .notice-error { border-color: var(--error); color: var(--error); }
-/* Dashboard */
+/* Nur für die Komponenten-Testseite */
+.demo-toolbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.demo-toolbar button { min-height: 36px; padding: 6px 12px; }
+.demo-toolbar button[aria-pressed="true"] { background: var(--primary); color: white; }
+.demo-hint { margin-left: auto; font-size: 12px; color: var(--muted); }
+.component-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
+.component-grid .card h2 { margin-bottom: 20px; }
+.button-samples { display: flex; gap: 12px; flex-wrap: wrap; }
+.artist-detail {
+  padding: 32px;
+}
+
+.artist-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.artist-image-box {
+  width: 180px;
+  height: 180px;
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.artist-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artist-image-placeholder {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.artist-summary h1 {
+  margin-top: 6px;
+}
+
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.info-block {
+  background: var(--surface-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.info-block h2 {
+  margin-bottom: 16px;
+}
+
+.info-block p {
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.info-block p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .auth-layout { grid-template-columns: minmax(0, 1fr) 390px; gap: 24px; }
+  h1 { font-size: 30px; }
+  .site-nav { gap: 16px; }
+}
+@media (max-width: 700px) {
+  .header-inner { flex-wrap: wrap; gap: 12px; padding: 14px 20px; }
+  .site-nav { width: 100%; justify-content: space-between; gap: 12px; }
+  .container { width: calc(100% - 32px); margin: 32px auto; }
+  .auth-layout, .profile-grid, .form-row, .component-grid, .artist-grid { grid-template-columns: minmax(0, 1fr); }
+  .card { padding: 24px; }
+  .artist-detail { padding: 24px; }
+  .artist-header { flex-direction: column; align-items: flex-start; }
+  .artist-image-box { width: 140px; height: 140px; }
+  h1 { font-size: 28px; }
+  .progress-inner { padding-inline: 16px; flex-wrap: wrap; gap: 4px; }
+  .form-actions { flex-wrap: wrap; }
+  .demo-hint { width: 100%; margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
+.artist-links-card {
+    margin-top: 1.25rem;
+    padding: 1.5rem;
+}
+
+.artist-links-card h2 {
+    margin: 0 0 1rem;
+}
+
+.artist-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.artist-link-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    box-sizing: border-box;
+    height: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+    border-radius: 0.75rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.artist-link-item:hover,
+.artist-link-item:focus-visible {
+    border-color: currentColor;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+}
+
+.artist-link-text {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.artist-link-domain {
+    font-size: 0.875rem;
+    opacity: 0.75;
+    overflow-wrap: anywhere;
+}
+
+.artist-link-arrow {
+    flex-shrink: 0;
+    font-size: 1.2rem;
+}
+
 .site-nav a[aria-current="page"] { color: var(--text); font-weight: 700; }
 .profile-status { margin-top: 32px; padding: 24px; }
 .profile-status h2 { font-size: 18px; }
@@ -101,28 +251,3 @@ h3, legend { font-size: 21px; font-weight: 700; }
 .placeholder-tile h2 { font-size: 14px; font-weight: 400; }
 .placeholder-icon { width: 32px; height: 24px; margin-bottom: 6px; background: #e4e6e9; border: 1px solid var(--muted); }
 .tile-wide { grid-column: 1 / -1; min-height: 180px; }
-/* Nur für die Komponenten-Testseite */
-.demo-toolbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.demo-toolbar button { min-height: 36px; padding: 6px 12px; }
-.demo-toolbar button[aria-pressed="true"] { background: var(--primary); color: white; }
-.demo-hint { margin-left: auto; font-size: 12px; color: var(--muted); }
-.component-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 24px; }
-.component-grid .card h2 { margin-bottom: 20px; }
-.button-samples { display: flex; gap: 12px; flex-wrap: wrap; }
-@media (max-width: 900px) {
-  .auth-layout { grid-template-columns: minmax(0, 1fr) 390px; gap: 24px; }
-  h1 { font-size: 30px; }
-  .site-nav { gap: 16px; }
-}
-@media (max-width: 700px) {
-  .header-inner { flex-wrap: wrap; gap: 12px; padding: 14px 20px; }
-  .site-nav { width: 100%; justify-content: space-between; gap: 12px; }
-  .container { width: calc(100% - 32px); margin: 32px auto; }
-  .auth-layout, .profile-grid, .form-row, .component-grid { grid-template-columns: minmax(0, 1fr); }
-  .card { padding: 24px; }
-  h1 { font-size: 28px; }
-  .progress-inner { padding-inline: 16px; flex-wrap: wrap; gap: 4px; }
-  .form-actions { flex-wrap: wrap; }
-  .demo-hint { width: 100%; margin-left: 0; }
-}
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; } }
