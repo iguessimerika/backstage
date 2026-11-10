@@ -7,13 +7,12 @@ artist_bp = Blueprint("artist", __name__)
 @artist_bp.route("/create_artist", methods=["GET", "POST"])
 def create_artist():
     if request.method == "POST":
-        artist.create_artist(
+        artist_id = artist.create_artist(
             request.form.to_dict(),
             session.get("userid"),
             request.files.get("artist-image"),
         )
-        # Nach dem Speichern des Künstlerprofils geht es direkt zum Dashboard
-        return redirect(url_for("artist.artist_dashboard"))
+        return redirect(url_for("artist.show_artist", artist_id=artist_id))
 
     return render_template("create_artist.html")
 
