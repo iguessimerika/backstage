@@ -98,6 +98,30 @@ def get_artist_by_id(artist_id):
         connection.close()
 
 
+def get_artist_by_userid(user_id):
+    connection = db.get_connection()
+    cursor = None
+
+    try:
+        cursor = connection.cursor()
+        cursor.execute(
+            "SELECT ARTISTID FROM ARTIST WHERE USER_ID = %s",
+            (user_id,),
+        )
+        row = cursor.fetchone()
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        connection.close()
+
+    if row is None:
+        return None
+
+    # Vorhandene Funktion wiederverwenden, damit auch die Links mitkommen
+    return get_artist_by_id(row[0])
+
+
 def artist_picture(artist_id):
     picture = get_picture(artist_id)
 
