@@ -1,5 +1,6 @@
 import db
 from urllib.parse import urlsplit
+from werkzeug.datastructures import MultiDict
 
 
 ARTIST_RELATION_TYPE = '1'
@@ -18,7 +19,7 @@ LINK_LABELS = {
 
 LINK_TYPES = {
     "instagram": 1,     # Instagram
-    "artist-other": 2,  # YouTube-Profil
+    "youtube": 2,  # YouTube-Profil
     "audio-2": 3,       # Spotify-Hörprobe
     "audio-1": 4,       # SoundCloud-Hörprobe
     "video-1": 5,       # YouTube-Vorschauvideo
@@ -28,10 +29,13 @@ LINK_TYPES = {
 }
 
 
+
+
 def map_links(data):
     links = []
+    fields = data.items(multi=True) if isinstance(data, MultiDict) else data.items()
 
-    for field, value in data.items():
+    for field, value in fields:
         link_type = LINK_TYPES.get(field)
 
         if field == "additional_links" or field.startswith("additional_links_"):

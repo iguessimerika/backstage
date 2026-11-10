@@ -32,6 +32,7 @@ def create_artist(data, user_id, picture=None,):
                     ),
                 )
         artist_id = cursor.lastrowid
+        print(f"data: {data}")
         dbdata_links.insert_links(cursor, data, artist_id, 1) # relation_type 1 for artist
         connection.commit()
         return artist_id;
