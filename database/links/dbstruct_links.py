@@ -13,7 +13,7 @@ def create_links_table():
             CREATE TABLE IF NOT EXISTS LINKS (
                 LINKID INT NOT NULL AUTO_INCREMENT,
                 TYPE INT NOT NULL,
-                VALUE VARCHAR(50) NOT NULL,
+                VALUE VARCHAR(255) NOT NULL,
                 RELATION_TYPE INT NOT NULL,
                 RELATION_ID INT NOT NULL,
                 PRIMARY KEY (LINKID)
