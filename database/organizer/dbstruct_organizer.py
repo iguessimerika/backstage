@@ -1,5 +1,6 @@
 import db
- 
+
+
 def create_organizers_table():
     connection = db.get_connection()
     try:

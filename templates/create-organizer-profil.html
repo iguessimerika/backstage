@@ -7,6 +7,8 @@
     <title>Veranstalter Profil erstellen</title>
     <!-- Einbindung der CSS-Datei -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Einbindung der scrpit.js Datei zum Anzeigen der Profilbilder im Create vorgang -->
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
 </head>
 
 <body>
@@ -24,6 +26,8 @@
                     <div class="field">
                         <label for="profilePicture">Profilbild hinzufügen (JPEG oder PNG)</label>
                         <input type="file" id="profilePicture" name="profilePicture" accept="image/png, image/jpeg" class="file-input">
+                        <!-- NEU: Container für die Bildvorschau -->
+                        <img id="imagePreview" src="" alt="Bildvorschau" style="display: none; max-width: 150px; margin-top: 15px; border-radius: 8px; border: 1px solid #ccc;">
                     </div>
                 </fieldset>
 
