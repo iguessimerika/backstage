@@ -121,20 +121,18 @@
                     <label for="genre">Genre</label>
                     <select class="select" id="genre" name="genre">
                         <option value="" selected>Bitte auswählen</option>
-                        <option>Elektronisch</option>
-                        <option>Rock</option>
-                        <option>Pop</option>
-                        <option>Hip-Hop</option>
-                        <option>Jazz</option>
+                        {% for genre in genres %}
+                        <option value="{{ genre.ID }}">{{ genre.VALUE }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="field">
                     <label for="subgenre">Subgenre</label>
                     <select class="select" id="subgenre" name="subgenre">
                         <option value="">Optional auswählen</option>
-                        <option>Downtempo</option>
-                        <option>House</option>
-                        <option>Techno</option>
+                        {% for genre in genres %}
+                        <option value="{{ genre.ID }}">{{ genre.VALUE }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -225,17 +223,6 @@
 </main>
 
 <script>
-const genre = document.getElementById('genre');
-const subgenre = document.getElementById('subgenre');
-
-function updateSubgenres() {
-    subgenre.disabled = genre.value !== 'Elektronisch';
-    if (subgenre.disabled) subgenre.value = '';
-}
-
-genre.addEventListener('change', updateSubgenres);
-updateSubgenres();
-
 const imageInput = document.getElementById('artist-image');
 const imagePreview = document.getElementById('artist-image-preview');
 let previewUrl;

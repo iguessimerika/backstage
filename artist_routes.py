@@ -12,7 +12,7 @@ def create_artist():
             session.get("userid"),
             request.files.get("artist-image"),
         )
-        return redirect(url_for("artist.show_artist", artist_id=artist_id))
+        return redirect(url_for("artist.show_artist", artist_id=artist_id, genres=artist.get_genres()))
 
     return render_template("create_artist.html")
 
@@ -29,7 +29,7 @@ def show_artist(artist_id):
     if artist_data is None:
         return "Artist not found", 404
 
-    return render_template("show_artist.html", artist=artist_data)
+    return render_template("show_artist.html", artist=artist_data, genres=artist.get_genres())
 
 
 @artist_bp.route("/artist_dashboard")
