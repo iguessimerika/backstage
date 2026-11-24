@@ -1,7 +1,9 @@
 import os, user, db, artist
 from flask import Flask, redirect, render_template, request, url_for, session
-from artist_routes import artist_bp
-from organizer import organizer_bp
+from routes.artist_routes import artist_bp
+from routes.organizer_routes import organizer_bp
+from routes.explore_routes import explore_bp
+from routes.event_routes import event_bp
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"  # wichtig für Sessions
@@ -9,7 +11,32 @@ app.secret_key = "supersecretkey"  # wichtig für Sessions
 @app.route("/test")
 def test():
     return render_template("komponenten-test.html")
- 
+
+# -- HEADER --
+# Provides each template with the links for dashboard and profile, depending on the profile type of the logged-in user
+@app.context_processor
+def inject_nav():
+    userid = session.get("userid")
+    if userid is None:
+        return {}
+
+    profile_type = user.dbdata_user.get_profile_type(userid)
+
+    if profile_type == "artist":
+        artist_data = artist.get_artist_by_userid(userid)
+        return {
+            "nav_dashboard_url": url_for("artist.artist_dashboard"),
+            "nav_profile_url": url_for("artist.show_artist", artist_id=artist_data.get("ARTISTID"))
+        }
+
+    if profile_type == "organizer":
+        return {
+            "nav_dashboard_url": "#",  # @WIP: organizer dashboard route
+            "nav_profile_url": "#"    # @WIP: organizer profile route
+        }
+
+    # No profile created yet
+    return {}
  
 # -- LOGIN --
 @app.route("/")
@@ -61,6 +88,12 @@ app.register_blueprint(artist_bp)
 # -- ORGANIZER --
 # Registrierung des Organizer-Moduls
 app.register_blueprint(organizer_bp)
+
+# -- EXPLORE -- 
+app.register_blueprint(explore_bp)
+
+# -- EVENT -- 
+app.register_blueprint(event_bp)
  
 if __name__ == "__main__":
     app.run(

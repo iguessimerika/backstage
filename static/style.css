@@ -251,3 +251,9 @@ h3, legend { font-size: 21px; font-weight: 700; }
 .placeholder-tile h2 { font-size: 14px; font-weight: 400; }
 .placeholder-icon { width: 32px; height: 24px; margin-bottom: 6px; background: #e4e6e9; border: 1px solid var(--muted); }
 .tile-wide { grid-column: 1 / -1; min-height: 180px; }
+
+
+.choice-card { display: block; min-height: 350px; color: var(--text); text-decoration: none; transition: background-color .15s, box-shadow .15s; }
+.choice-card:hover { color: var(--text); background: var(--surface-soft); box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
+.choice-card p { color: var(--muted); }
+@media (max-width: 700px) { .choice-card { min-height: 200px; } }
