@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for, session, send_file
 from database.links import dbdata_links
 import db
+import io
 
 # Initialisierung des Blueprints für den Organizer-Bereich
 # Der erste Parameter ist der Name des Blueprints, der zweite der Import-Name
@@ -58,7 +59,7 @@ def submit_organizer():
             dbdata_links.insert_links(cursor, data, organizer_id, 2)
             connection.commit()
 
-            return "Veranstalter Profil erfolgreich in der Datenbank angelegt!"
+            return redirect(url_for('organizer.view_organizer', organizer_id=organizer_id))
 
         except Exception as e:  # noqa: BLE001
             connection.rollback()
@@ -69,3 +70,71 @@ def submit_organizer():
                 cursor.close()
             if connection:
                 connection.close()
+
+# --- NEUE ROUTEN FÜR DIE ANZEIGE DES PROFILS ---
+
+@organizer_bp.route("/organizer/<int:organizer_id>")
+def view_organizer(organizer_id):
+    connection = db.get_connection()
+    cursor = None
+    try:
+        # Dictionary-Cursor verwenden, um über Spaltennamen (Keys) auf Daten zuzugreifen
+        cursor = connection.cursor(dictionary=True) 
+        
+        # 1. Organizer-Daten holen
+        cursor.execute("SELECT * FROM ORGANIZER WHERE ORGANIZERID = %s", (organizer_id,))
+        organizer = cursor.fetchone()
+        
+        if not organizer:
+            return "Veranstalter nicht gefunden", 404
+            
+        # 2. User-Daten holen (z. B. für Kontakt-E-Mail)
+        cursor.execute("SELECT EMAIL FROM USERS WHERE USERID = %s", (organizer['USER_ID'],))
+        user_db = cursor.fetchone()
+        user_data = user_db if user_db else {}
+        
+        # 3. Links holen (RELATION_TYPE 2)
+        cursor.execute("SELECT TYPE, VALUE FROM LINKS WHERE RELATION_ID = %s AND RELATION_TYPE = 2", (organizer_id,))
+        links_db = cursor.fetchall()
+        
+        # Links formatieren
+        type_mapping = {1: "Website", 2: "Instagram", 3: "Weitere"}
+        links = []
+        for link in links_db:
+            links.append({
+                "type_name": type_mapping.get(link['TYPE'], "Link"),
+                "value": link['VALUE']
+            })
+
+        # 4. Prüfen, ob ein Bild in der DB liegt und die URL generieren
+        if organizer.get('PROFILPICTURE'):
+            organizer['profile_picture'] = url_for('organizer.get_image', organizer_id=organizer_id)
+        else:
+            organizer['profile_picture'] = None
+
+        # Hier wird die HTML-Datei aufgerufen, die wir am Anfang erstellt haben
+        return render_template("show_organizer.html", organizer=organizer, user=user_data, links=links)
+
+    except Exception as e:
+        return f"Fehler beim Laden des Profils: {str(e)}", 500
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
+
+
+@organizer_bp.route("/organizer_image/<int:organizer_id>")
+def get_image(organizer_id):
+    connection = db.get_connection()
+    cursor = None
+    try:
+        cursor = connection.cursor()
+        cursor.execute("SELECT PROFILPICTURE FROM ORGANIZER WHERE ORGANIZERID = %s", (organizer_id,))
+        row = cursor.fetchone()
+        
+        if row and row[0]:
+            return send_file(io.BytesIO(row[0]), mimetype='image/jpeg') 
+        
+        return "Kein Bild gefunden", 404
+    finally:
+        if cursor: cursor.close()
+        if connection: connection.close()
