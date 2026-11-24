@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ organizer.NAME }} – Backstage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+      <div class="header-inner">
+        <!-- Passe die hrefs an deine Veranstalter-Routen an -->
+        <a class="brand" href="#">
+          <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+            <rect x="11" y="2" width="10" height="23" rx="5" />
+            <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5" />
+          </svg>
+          <span>Backstage</span>
+        </a>
+        <nav class="site-nav" aria-label="Hauptmenü">
+          <a href="#">Dashboard</a>
+          <a href="#">Entdecken</a>
+          <a href="#" aria-current="page">Profil</a>
+          <span class="user-menu">
+            <span class="avatar" aria-hidden="true"></span> {{ session.get('username') or 'Veranstalter' }}
+          </span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+        <!-- Die 'artist-*' Klassen wurden beibehalten, damit dein bestehendes CSS sofort greift -->
+        <section class="card artist-detail" aria-labelledby="organizer-name">
+            <div class="artist-header">
+                <div class="artist-image-box">
+                    {% if organizer.profile_picture %}
+                        <img
+                            src="{{ organizer.profile_picture }}"
+                            alt="Logo von {{ organizer.NAME }}"
+                        >
+                    {% else %}
+                        <div class="artist-image-placeholder">Kein Bild</div>
+                    {% endif %}
+                </div>
+
+                <div class="artist-summary">
+                    <div class="eyebrow">Veranstalterprofil</div>
+                    <h1 id="organizer-name">{{ organizer.NAME }}</h1>
+                    <p class="lead">
+                        {{ organizer.FIRSTNAME }} {{ organizer.LASTNAME }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="artist-grid">
+                <div class="info-block">
+                    <h2>Ansprechpartner</h2>
+                    <p><strong>Vorname:</strong> {{ organizer.FIRSTNAME }}</p>
+                    <p><strong>Nachname:</strong> {{ organizer.LASTNAME }}</p>
+                    {% if user.email %}
+                        <p><strong>Kontakt:</strong> <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+                    {% endif %}
+                </div>
+                
+                <!-- Da der Veranstalter keine Bio hat, bleibt dieser Block leer oder kann für andere Infos genutzt werden -->
+                <div class="info-block">
+                    <h2>Weitere Informationen</h2>
+                    <p>Aktuell sind keine weiteren Informationen hinterlegt.</p>
+                </div>
+            </div>
+        </section>
+
+        {% if links and links|length > 0 %}
+            <section class="card artist-links-card" aria-labelledby="organizer-links-title">
+                <h2 id="organizer-links-title">Online-Präsenz</h2>
+
+                <ul class="artist-links-grid">
+                    {% for link in links %}
+                        <li>
+                            <a
+                                class="artist-link-item"
+                                href="{{ link.value }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="{{ link.value }}"
+                            >
+                                <span class="artist-link-text">
+                                    <strong>{{ link.type_name }}</strong>
+                                    <!-- Da es keine separate link.domain gibt, geben wir hier die URL als Subtext aus -->
+                                    <span class="artist-link-domain">{{ link.value }}</span>
+                                </span>
+                                <span class="artist-link-arrow" aria-hidden="true">↗</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>

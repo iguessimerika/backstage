@@ -55,19 +55,31 @@
           <a class="btn" href="/create_artist">Künstlerprofil erstellen</a>
         </article>
 
-        <article class="card profile-card">
+<article class="card profile-card">
           <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
             <rect x="2" y="5" width="28" height="28" rx="3" />
             <path d="M2 14h28M10 2v8M22 2v8" />
           </svg>
-          <h2>Veranstalterprofil erstellen</h2>
-          <p>Stelle deine Organisation vor und werde für Künstler auffindbar.</p>
-          <ul class="check-list">
-            <li>Firmen- und Kontaktdaten</li>
-            <li>Website und Social Links</li>
-            <li>Öffentliches Profil</li>
-          </ul>
-          <a class="btn" href="/create_organizer">Veranstalterprofil erstellen</a>
+          
+          {% if organizer_id %}
+            <h2>Veranstalterprofil</h2>
+            <p>Du hast bereits ein Veranstalterprofil für deine Organisation angelegt.</p>
+            <ul class="check-list">
+              <li>Firmen- und Kontaktdaten</li>
+              <li>Website und Social Links</li>
+              <li>Öffentliches Profil</li>
+            </ul>
+            <a class="btn" href="{{ url_for('organizer.view_organizer', organizer_id=organizer_id) }}">Profil anzeigen</a>
+          {% else %}
+            <h2>Veranstalterprofil erstellen</h2>
+            <p>Stelle deine Organisation vor und werde für Künstler auffindbar.</p>
+            <ul class="check-list">
+              <li>Firmen- und Kontaktdaten</li>
+              <li>Website und Social Links</li>
+              <li>Öffentliches Profil</li>
+            </ul>
+            <a class="btn" href="/create_organizer">Veranstalterprofil erstellen</a>
+          {% endif %}
         </article>
       </div>
     </section>

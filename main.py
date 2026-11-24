@@ -50,9 +50,35 @@ def register():
     return redirect(url_for("profile_choice"))
  
 # -- PROFILE CHOICE --
+# -- PROFILE CHOICE --
 @app.route("/profile-choice")
 def profile_choice():
-    return render_template("profile-choice.html", name=session.get("username"))
+    user_id = session.get("userid")
+    organizer_id = None
+
+    # Datenbankabfrage: Prüfen, ob der eingeloggte User bereits ein Organizer-Profil hat
+    if user_id:
+        connection = db.get_connection()
+        cursor = None
+        try:
+            # Dictionary-Cursor für sauberen Spaltenzugriff
+            cursor = connection.cursor(dictionary=True) 
+            cursor.execute("SELECT ORGANIZERID FROM ORGANIZER WHERE USER_ID = %s", (user_id,))
+            result = cursor.fetchone()
+            
+            if result:
+                organizer_id = result['ORGANIZERID']
+                
+        except Exception as e:
+            print(f"Datenbankfehler beim Laden der Profilauswahl: {e}")
+        finally:
+            if cursor:
+                cursor.close()
+            if connection:
+                connection.close()
+
+    # organizer_id wird an das HTML-Template übergeben (ist None, wenn keins existiert)
+    return render_template("profile-choice.html", name=session.get("username"), organizer_id=organizer_id)
  
  
 # -- ARTIST -- 
