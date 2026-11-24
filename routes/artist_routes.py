@@ -13,7 +13,7 @@ def create_artist():
             session.get("userid"),
             request.files.get("artist-image"),
         )
-        return redirect(url_for("artist.show_artist", artist_id=artist_id, ))
+        return redirect(url_for("artist.show_artist", artist_id=artist_id))
 
     return render_template("create_artist.html", genres=dbdata_genre.get_genres())
 

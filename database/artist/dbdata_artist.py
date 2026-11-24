@@ -97,7 +97,7 @@ def get_artist_by_id(artist_id):
         if artist_data is None:
             return None
 
-        artist_data["links"] = dbdata_links.get_links_byRelationType(
+        artist_data["links"] = dbdata_links.get_links_by_relationtype(
             artist_id,
             cursor,
             dbdata_links.ARTIST_RELATION_TYPE,
