@@ -32,7 +32,7 @@ def inject_nav():
     if profile_type == "organizer":
         return {
             "nav_dashboard_url": "#",  # @WIP: organizer dashboard route
-            "nav_profile_url": "#"    # @WIP: organizer profile route
+            "nav_profile_url": url_for("organizer.view_organizer", organizer_id=artist_data.get("ARTISTID"))
         }
 
     # No profile created yet
