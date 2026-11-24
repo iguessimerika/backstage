@@ -118,11 +118,11 @@
             <legend>Musikrichtung</legend>
             <div class="form-row">
                 <div class="field">
-                    <label for="genre">Genre</label>
-                    <select class="select" id="genre" name="genre">
+                    <label for="genre">Genre <span aria-hidden="true">*</span></label>
+                    <select class="select" id="genre" name="genre" required>
                         <option value="" selected>Bitte auswählen</option>
                         {% for genre in genres %}
-                        <option value="{{ genre.ID }}">{{ genre.VALUE }}</option>
+                        <option value="{{ genre.GENREID }}">{{ genre.VALUE }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -131,7 +131,7 @@
                     <select class="select" id="subgenre" name="subgenre">
                         <option value="">Optional auswählen</option>
                         {% for genre in genres %}
-                        <option value="{{ genre.ID }}">{{ genre.VALUE }}</option>
+                        <option value="{{ genre.GENREID }}">{{ genre.VALUE }}</option>
                         {% endfor %}
                     </select>
                 </div>

@@ -1,10 +1,11 @@
 import db
 
+
 def insert_genres():
     genres = [
         "Rock", "Ambient", "Classical", "Country", "EDM",
         "Disco", "Dnb", "Folk", "Hiphop/Rap", "Indie",
-        "Jazz/Blues", "Metal", "Pop", "Rnb/Soul", "Cover"
+        "Jazz/Blues", "Metal", "Pop", "Rnb/Soul", "Cover",
     ]
 
     connection = None
@@ -15,8 +16,11 @@ def insert_genres():
         cursor = connection.cursor()
 
         cursor.executemany(
-            "INSERT INTO GENRE (`VALUE`) VALUES (%s)",
-            [(genre,) for genre in genres]
+            """
+            INSERT INTO GENRE (`VALUE`) VALUES (%s)
+            ON DUPLICATE KEY UPDATE GENREID = GENREID
+            """,
+            [(genre,) for genre in genres],
         )
 
         connection.commit()
@@ -43,8 +47,9 @@ def get_genres():
         connection = db.get_connection()
         cursor = connection.cursor(dictionary=True)
 
-        cursor.execute("SELECT ID, `VALUE` FROM GENRE ORDER BY `VALUE`")
-        return cursor.fetchall()
+        cursor.execute("SELECT GENREID, `VALUE` FROM GENRE ORDER BY `VALUE`")
+        result = cursor.fetchall()
+        return result
 
     except Exception as error:
         print(f"Fehler beim Laden der Genres: {error}")

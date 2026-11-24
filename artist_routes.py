@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, session, url_for
 import artist
+from database.genre import dbdata_genre
 
 artist_bp = Blueprint("artist", __name__)
 
@@ -12,9 +13,9 @@ def create_artist():
             session.get("userid"),
             request.files.get("artist-image"),
         )
-        return redirect(url_for("artist.show_artist", artist_id=artist_id, genres=artist.get_genres()))
+        return redirect(url_for("artist.show_artist", artist_id=artist_id, ))
 
-    return render_template("create_artist.html")
+    return render_template("create_artist.html", genres=dbdata_genre.get_genres())
 
 
 @artist_bp.route("/artistpicture/<int:artist_id>")
@@ -29,7 +30,7 @@ def show_artist(artist_id):
     if artist_data is None:
         return "Artist not found", 404
 
-    return render_template("show_artist.html", artist=artist_data, genres=artist.get_genres())
+    return render_template("show_artist.html", artist=artist_data, genres=dbdata_genre.get_genres())
 
 
 @artist_bp.route("/artist_dashboard")

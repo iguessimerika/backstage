@@ -12,8 +12,9 @@ def create_genre_table():
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS GENRE (
                 GENREID INT NOT NULL AUTO_INCREMENT,
-                VALUE VARCHAR(50) NOT NULL,
-                PRIMARY KEY (GENREID)
+                `VALUE` VARCHAR(50) NOT NULL,
+                PRIMARY KEY (GENREID),
+                UNIQUE KEY uq_genre_value (`VALUE`)
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
         """)
 

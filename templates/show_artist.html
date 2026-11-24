@@ -60,6 +60,11 @@
                     <p><strong>Vorname:</strong> {{ artist.FIRSTNAME }}</p>
                     <p><strong>Nachname:</strong> {{ artist.LASTNAME }}</p>
                     <p><strong>Standort:</strong> {{ artist.LOCATION or 'Nicht angegeben' }}</p>
+                    <p><strong>Genre:</strong> {{ artist.GENRE_NAME or 'Nicht angegeben' }}</p>
+
+                    {% if artist.SUBGENRE_NAME %}
+                        <p><strong>Subgenre:</strong> {{ artist.SUBGENRE_NAME }}</p>
+                    {% endif %}
                 </div>
 
                 <div class="info-block">
