@@ -1,0 +1,24 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="{{ nav_dashboard_url or url_for('index') }}">
+      <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+        <rect x="11" y="2" width="10" height="23" rx="5" />
+        <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5" />
+      </svg>
+      <span>Backstage</span>
+    </a>
+
+    {% if session.userid %}
+    <nav class="site-nav" aria-label="Hauptmenü">
+      {% if nav_dashboard_url and not hide_nav %}
+      <a href="{{ nav_dashboard_url }}" {% if active_page == 'dashboard' %}aria-current="page"{% endif %}>Dashboard</a>
+      <a href="{{ url_for('explore.explore') }}" {% if active_page == 'explore' %}aria-current="page"{% endif %}>Entdecken</a>
+      <a href="{{ nav_profile_url }}" {% if active_page == 'profile' %}aria-current="page"{% endif %}>Profil</a>
+      {% endif %}
+      <span class="user-menu">
+        <span class="avatar" aria-hidden="true"></span> {{ session.username }}
+      </span>
+    </nav>
+    {% endif %}
+  </div>
+</header>
