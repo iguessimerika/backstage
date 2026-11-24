@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    {% with active_page = 'profile' %}{% include '_header.html' %}{% endwith %}
     <header class="site-header">
       <div class="header-inner">
         <!-- Passe die hrefs an deine Veranstalter-Routen an -->
