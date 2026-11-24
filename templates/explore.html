@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Backstage – Entdecken</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    {with active_page = 'explore' %}{% include '_header.html' %}{% endwith %}
+
+    <main class="container">
+        <section id="view-discover">
+        <div class="eyebrow">Entdecken</div>
+        <h1>Nach was suchst du?</h1>
+        <p class="lead">Finde Künstler und Veranstalter oder stöbere durch anstehende Veranstaltungen.</p>
+
+        <div class="profile-grid">
+            {# @WIP: Link zur Suche nach Künstlern und Veranstaltern, sobald die Seite umgesetzt ist #}
+            <a class="card profile-card choice-card" href="#">
+            <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+                <rect x="11" y="2" width="10" height="23" rx="5" />
+                <path d="M5 16v4a11 11 0 0 0 22 0v-4M16 31v5" />
+            </svg>
+            <h2>Künstler und Veranstalter</h2>
+            <p>Suche nach Kontakten, ob Künstler oder Veranstalter.</p>
+            </a>
+
+            {# @WIP: Link zur Veranstaltungsseite, sobald die Seite umgesetzt ist #}
+            <a class="card profile-card choice-card" href="#">
+            <svg class="icon" viewBox="0 0 32 36" aria-hidden="true">
+                <rect x="2" y="5" width="28" height="28" rx="3" />
+                <path d="M2 14h28M10 2v8M22 2v8" />
+            </svg>
+            <h2>Veranstaltungen</h2>
+            <p>Suche und verwalte Veranstaltungen.</p>
+            </a>
+        </div>
+        </section>
+    </main>
+</body>
+
+</html>
