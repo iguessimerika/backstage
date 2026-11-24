@@ -1,0 +1,37 @@
+import db
+
+
+def create_genre_table():
+    connection = None
+    cursor = None
+
+    try:
+        connection = db.get_connection()
+        cursor = connection.cursor()
+
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS GENRE (
+                GENREID INT NOT NULL AUTO_INCREMENT,
+                `VALUE` VARCHAR(50) NOT NULL,
+                PRIMARY KEY (GENREID),
+                UNIQUE KEY uq_genre_value (`VALUE`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+        """)
+
+        connection.commit()
+        print("Tabelle GENRE ist vorhanden oder existiert bereits.")
+        return True
+
+    except Exception as error:
+        print(f"Tabelle GENRE konnte nicht erstellt werden: {error}")
+        return False
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if connection is not None:
+            connection.close()
+
+
+if __name__ == "__main__":
+    create_genre_table()

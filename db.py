@@ -1,4 +1,4 @@
-import os, user, artist, mysql.connector, links
+import os, user, artist, mysql.connector, links, genre
 
 
 def get_connection():
@@ -43,6 +43,7 @@ def init_database():
     user.init_user_db()
     artist.init_artist_db()
     links.init_links_db()
+    genre.init_genre_db()
 
 
 if __name__ == "__main__":

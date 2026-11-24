@@ -11,15 +11,15 @@ def create_artist(data, user_id, picture=None,):
 
     try:
 
-        picture_data = picture.read() or None            
+        picture_data = picture.read() or None        
         cursor = connection.cursor()
         cursor.execute(
                     """
                     INSERT INTO ARTIST (
                         ARTISTNAME, FIRSTNAME, LASTNAME,
-                        LOCATION, BIO, USER_ID, PICTURE
+                        LOCATION, BIO, GENRE_ID, SUBGENRE_ID, USER_ID, PICTURE
                     )
-                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
                     """,
                     (
                         data["artistname"],
@@ -27,12 +27,13 @@ def create_artist(data, user_id, picture=None,):
                         data["lastname"],
                         data["location"],
                         data.get("bio", ""),
+                        data.get("genre"),
+                        (data.get("subgenre") or "").strip() or None,
                         user_id,
                         picture_data,
                     ),
                 )
         artist_id = cursor.lastrowid
-        print(f"data: {data}")
         dbdata_links.insert_links(cursor, data, artist_id, 1) # relation_type 1 for artist
         connection.commit()
         return artist_id;
@@ -72,32 +73,41 @@ def get_artist_by_id(artist_id):
         cursor.execute(
             """
             SELECT
-                ARTISTID,
-                USER_ID,
-                ARTISTNAME,
-                FIRSTNAME,
-                LASTNAME,
-                LOCATION,
-                BIO,
-                GENRE_ID,
-                SUBGENRE_ID,
-                PICTURE
-            FROM ARTIST
-            WHERE ARTISTID = %s
+                artist.ARTISTID,
+                artist.USER_ID,
+                artist.ARTISTNAME,
+                artist.FIRSTNAME,
+                artist.LASTNAME,
+                artist.LOCATION,
+                artist.BIO,
+                artist.GENRE_ID,
+                artist.SUBGENRE_ID,
+                artist.PICTURE,
+                genre.VALUE AS GENRE_NAME,
+                subgenre.VALUE AS SUBGENRE_NAME
+            FROM ARTIST AS artist
+            LEFT JOIN GENRE AS genre ON artist.GENRE_ID = genre.GENREID
+            LEFT JOIN GENRE AS subgenre ON artist.SUBGENRE_ID = subgenre.GENREID
+            WHERE artist.ARTISTID = %s
             """,
             (artist_id,),
         )
+
         artist_data = cursor.fetchone()
         if artist_data is None:
-            return None;
-        artist_data["links"] = dbdata_links.get_links_byRelationType(artist_id, cursor, dbdata_links.ARTIST_RELATION_TYPE)
+            return None
+
+        artist_data["links"] = dbdata_links.get_links_by_relationtype(
+            artist_id,
+            cursor,
+            dbdata_links.ARTIST_RELATION_TYPE,
+        )
         return artist_data
 
     finally:
         if cursor is not None:
             cursor.close()
         connection.close()
-
 
 def get_artist_by_userid(user_id):
     connection = db.get_connection()

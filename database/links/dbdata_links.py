@@ -71,7 +71,7 @@ def insert_links(cursor, data, relation_id, relation_type):
 
 
 
-def get_links_byRelationType(relation_id, cursor, relation_type):
+def get_links_by_relationtype(relation_id, cursor, relation_type):
     cursor.execute(
         """
         SELECT `TYPE`, `VALUE`
