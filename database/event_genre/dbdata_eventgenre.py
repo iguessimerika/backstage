@@ -1,4 +1,3 @@
-
 import db
             
 """ Inserts a new event-genre relationship into the database. """
